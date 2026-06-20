@@ -9,29 +9,45 @@ try {
     document.getElementById("author").textContent = `By: Dodi Achmad`
 }
 
-/**
- * Challenge: Update the code below and in the 
- * getCurrentLocation callback to use try...catch
- */
 
-try {
-    const res = await fetch("https://api.coingecko.com/api/v3/coins/dogecoin")
+
+const coins = ["dogecoin", "bitcoin"];
+let currentCoinIndex = 0;
+
+// Combined using your original DOM elements and async/await
+async function fetchCoin(coinId) {
+  try {
+    const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
     if (!res.ok) {
-        throw Error("Something went wrong")
+      throw Error("Something went wrong");
     }
-    const data = await res.json()
+    const data = await res.json();
+
+    // Keeps your exact original original div targeting
     document.getElementById("crypto-top").innerHTML = `
-        <img src=${data.image.small} />
-        <span>${data.name}</span>
-    `
+            <img src=${data.image.small} />
+            <span>${data.name}</span>
+        `;
+    // Restored your exact append style, but with beautiful .toLocaleString() pricing
     document.getElementById("crypto").innerHTML += `
-        <p>🎯: $${data.market_data.current_price.usd}</p>
-        <p>👆: $${data.market_data.high_24h.usd}</p>
-        <p>👇: $${data.market_data.low_24h.usd}</p>
-    `
-} catch (err) {
-    console.error(err)
+            <p>🎯: $${data.market_data.current_price.usd.toLocaleString()}</p>
+            <p>👆: $${data.market_data.high_24h.usd.toLocaleString()}</p>
+            <p>👇: $${data.market_data.low_24h.usd.toLocaleString()}</p>
+        `;
+  } catch (err) {
+    console.error(err);
+  }
 }
+
+// Toggle function stays intact
+function toggleCoin() {
+  currentCoinIndex = currentCoinIndex === 0 ? 1 : 0;
+  fetchCoin(coins[currentCoinIndex]);
+}
+
+// Initial fetch on page load
+fetchCoin(coins[currentCoinIndex]);
+
 
 function getCurrentTime() {
     const date = new Date()
