@@ -105,3 +105,29 @@ fetch("https://api.quotable.io/random?tags=inspirational|technology|success")
         `;
   });
 
+  fetch("https://api.alternative.me/fng/")
+    .then((res) => res.json())
+    .then((data) => {
+      const value = data.data[0].value;
+      const label = data.data[0].value_classification;
+
+      // Pick an emoji based on the sentiment category
+      const sentimentEmoji = {
+        "Extreme Fear": "😱",
+        Fear: "😨",
+        Neutral: "😐",
+        Greed: "😏",
+        "Extreme Greed": "🤑",
+      };
+
+      const emoji = sentimentEmoji[label] || "📊";
+
+      document.getElementById("fear-greed").innerHTML = `
+            <p class="fear-greed-label">${emoji} ${label}</p>
+            <p class="fear-greed-bar-wrap">
+                <span class="fear-greed-bar" style="width: ${value}%"></span>
+            </p>
+        `;
+    })
+    .catch((err) => console.error(err));
+
