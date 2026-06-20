@@ -1,8 +1,6 @@
 # Baseline 🌅
 
-**A new tab replacement that gives financially-aware developers 
-a 10-second briefing on the state of the world; before 
-everything else starts competing for their attention.**
+**A new tab replacement that gives globally-aware people a 10-second briefing on the state of the world; markets, weather, air quality, and even today's biggest match — before everything else starts competing for their attention.**
 
 <img width="1596" height="807" alt="Baseline" src="https://github.com/user-attachments/assets/f4d2c212-6a23-4ffe-b06c-3d6850feae99" />
 
