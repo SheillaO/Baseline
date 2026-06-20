@@ -175,54 +175,48 @@ fetch("https://open.er-api.com/v6/latest/USD")
       `<p class="fx-title">💱 FX unavailable</p>`;
   });
 
+  const FOOTBALL_API_KEY = "983e09a9a3d9446d94aaaf15a2485354"; // get this from football-data.org
 
+  const matchContainer = document.getElementById("football-matches");
 
-  
-
-const API_KEY = "f5a63d13b866aec6785fd3e621b05936"; 
-
-const BASE_URL = "https://v3.football.api-sports.io";
-const matchContainer = document.getElementById("football-matches");
-
-async function fetchWorldCupMatches() {
-  try {
-    const response = await fetch(
-      `https://v3.football.api-sports.io/leagues?id=1&season=2026`,
-      {
-        method: "GET",
-        headers: {
-          "x-apisports-key": API_KEY,
+  async function fetchWorldCupMatches() {
+    try {
+      const response = await fetch(
+        "https://api.football-data.org/v4/competitions/WC/matches",
+        {
+          headers: {
+            "X-Auth-Token": FOOTBALL_API_KEY,
+          },
         },
-      },
-    );
+      );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    const data = await response.json();
-    const fixtures = data.response;
+      const data = await response.json();
+      const fixtures = data.matches; 
 
-    matchContainer.innerHTML = "";
+      matchContainer.innerHTML = "";
 
-    if (fixtures.length === 0) {
-      matchContainer.innerHTML = "<p>No matches found for this tournament.</p>";
-      return;
-    }
+      if (!fixtures || fixtures.length === 0) {
+        matchContainer.innerHTML =
+          "<p>No matches found for this tournament.</p>";
+        return;
+      }
 
-    fixtures.forEach((match) => {
-      const homeTeam = match.teams.home;
-      const awayTeam = match.teams.away;
-      const goals = match.goals;
-      const status = match.fixture.status.short;
+      fixtures.forEach((match) => {
+        const homeTeam = match.homeTeam;
+        const awayTeam = match.awayTeam;
+        const status = match.status;
 
-      const homeScore = goals.home !== null ? goals.home : "-";
-      const awayScore = goals.away !== null ? goals.away : "-";
+        const homeScore = match.score?.fullTime?.home ?? "-";
+        const awayScore = match.score?.fullTime?.away ?? "-";
 
-      matchContainer.innerHTML += `
+        matchContainer.innerHTML += `
                 <div class="match-card">
                     <div class="team">
-                        <img src="${homeTeam.logo}" alt="${homeTeam.name}" width="30" />
+                        <img src="${homeTeam.crest}" alt="${homeTeam.name}" width="30" />
                         <span>${homeTeam.name}</span>
                     </div>
                     <div class="score-status">
@@ -230,17 +224,22 @@ async function fetchWorldCupMatches() {
                         <span class="status-badge">${status}</span>
                     </div>
                     <div class="team">
-                        <img src="${awayTeam.logo}" alt="${awayTeam.name}" width="30" />
+                        <img src="${awayTeam.crest}" alt="${awayTeam.name}" width="30" />
                         <span>${awayTeam.name}</span>
                     </div>
                 </div>
             `;
-    });
-  } catch (error) {
-    console.error("Failed to fetch matches:", error);
-    matchContainer.innerHTML =
-      "<p>Error loading matches. Please check your API key.</p>";
+      });
+    } catch (error) {
+      console.error("Failed to fetch matches:", error);
+      matchContainer.innerHTML =
+        "<p>Error loading matches. Please check your API key.</p>";
+    }
   }
-}
 
-fetchWorldCupMatches();
+  fetchWorldCupMatches();
+
+
+
+  
+
