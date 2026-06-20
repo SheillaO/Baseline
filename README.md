@@ -24,7 +24,7 @@ disconnected from the world outside your goals.
 Baseline is the opposite bet.
 
 The developers, analysts, and globally-minded professionals 
-who open their laptops before 8am don't just need a motivational 
+who open their laptops before 8 am don't just need a motivational 
 quote. They need to know what happened overnight. Did the market 
 swing? Is the air quality acceptable enough to run before work? 
 What's the dollar doing against their local currency? How much 
@@ -94,7 +94,7 @@ fetch("https://open.er-api.com/v6/latest/USD") // ~120ms
 If any single request fails, the rest of the dashboard 
 continues rendering. Each fetch has its own `.catch()` 
 handler that either shows a fallback value or fails 
-silently — the user always sees a complete, functional 
+silently, the user always sees a complete, functional 
 dashboard regardless of which external services are slow 
 or unavailable.
 
@@ -122,9 +122,8 @@ Two categories of failure are treated differently:
 .catch(err => console.error(err))
 ```
 
-The distinction matters: background and time are **structural** 
-— the page looks broken without them. Financial data is 
-**informational** — a blank widget is more honest than a 
+The distinction matters: background and time are **structural**, the page looks broken without them. Financial data is 
+**informational**, a blank widget is more honest than a 
 cached number from three hours ago.
 
 ---
@@ -147,8 +146,7 @@ function toggleCoin() {
 ```
 
 There is no `localStorage`, no session storage, no state 
-library. The dashboard resets to Dogecoin on every new tab 
-— intentionally, because it is a **briefing tool**, not a 
+library. The dashboard resets to Dogecoin on every new tab, intentionally, because it is a **briefing tool**, not a 
 persistent application. Persistence would imply history. 
 Baseline has no memory by design.
 
@@ -172,7 +170,7 @@ navigator.geolocation.getCurrentPosition(position => {
 })
 ```
 One permission prompt. One coordinate resolution. 
-Three data sources. This matters on mobile especially — 
+Three data sources. This matters on mobile, especially 
 repeated geolocation calls drain battery and increase 
 latency noticeably.
 
@@ -180,8 +178,8 @@ latency noticeably.
 
 ## The Fear & Greed Meter
 
-The most visually distinctive element — a progress bar 
-that fills based on market sentiment — is built entirely 
+The most visually distinctive element is a progress bar 
+that is based on market sentiment, is built entirely 
 from a CSS `width` set inline from API data:
 
 ```javascript
@@ -218,13 +216,13 @@ can break the user experience. Each widget owns its
 own error state.
 
 **Data-driven rendering without a framework**
-All DOM updates are targeted and surgical — 
+All DOM updates are targeted and surgical,
 `getElementById` + `innerHTML` or `textContent`. No 
 virtual DOM, no re-render cycle, no component tree.
 
 **Geolocation as a data bus**
 Using a single position callback to feed three dependent 
-API calls eliminates redundant permission requests and 
+API calls eliminate redundant permission requests and 
 coordinates three data sources on a single async event.
 
 **State minimalism**
@@ -280,12 +278,12 @@ open source.
 ## Why Live Scores Belong in a "Briefing, Not a Distraction" Tool
 
 During a World Cup, the most common reason someone opens a new 
-tab isn't to write a to-do list, it's to check the score. 
+The tab isn't for writing a to-do list; it's for checking the score. 
 Without Baseline, that means opening Twitter, getting hit by 
-three unrelated trending topics, and resurfacing twenty minutes 
-later having read nothing about the actual match.
+three unrelated trending topics, and resurfacing every twenty minutes. 
+Having read nothing about the actual match.
 
-Baseline answers the one question you actually had — score, 
+Baseline answers the one question you actually had a score, 
 status, who's playing, in the same glance as the time and 
 weather, then gets out of the way. This is the same philosophy 
 applied to global events instead of personal productivity: 
@@ -304,7 +302,7 @@ Being upfront about tradeoffs:
   this is an acceptable tradeoff. For a public deployment, the 
   correct fix is a small serverless function (Cloudflare Worker 
   or Vercel Edge Function) that holds the key server-side and 
-  proxies the request — listed on the roadmap below.
+  proxies the request  listed on the roadmap below.
 - **No request caching.** Every page load re-fetches all nine 
   data sources. For a personal new-tab page opened dozens of 
   times a day, this adds up in API quota. A `localStorage` 
@@ -333,16 +331,13 @@ to work without the browser blocking it on `file://`.
 **Sheilla O.**
 Product-Minded Developer | Nairobi, Kenya 🇰🇪
 
-Building the financial awareness layer that productivity 
-tools forgot to include.
+Building the financial awareness layer that productivity tools forgot to include.
 
 💼 [LinkedIn](https://www.linkedin.com/in/sheillaolga/) • 
 🐙 [GitHub](https://github.com/SheillaO)
 
 ---
 
-*Momentum tells you what you want to accomplish today. 
-Baseline tells you what the world looks like right now. 
-Both matter. Only one existed.*
+*Momentum tells you what you want to accomplish today.  Baseline tells you what the world looks like right now. Both matter. Only one existed.*
 
 
