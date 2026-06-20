@@ -186,10 +186,7 @@ async function fetchWorldCupMatches() {
     const response = await fetch(`${BASE_URL}/fixtures?league=1&season=2026`, {
       method: "GET",
       headers: {
-        // FIXED: calling v3.football.api-sports.io DIRECTLY needs a single
-        // "x-apisports-key" header. "x-rapidapi-host"/"x-rapidapi-key" only
-        // work when your fetch URL points at a rapidapi.com gateway domain
-        // instead — mixing the two causes a 401/403 even with a valid key.
+        
         "x-apisports-key": API_KEY,
       },
     });
