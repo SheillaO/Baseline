@@ -192,12 +192,10 @@ async function fetchWorldCupMatches() {
       .filter((match) => match.status === "FINISHED")
       .slice(-2);
 
-    
     const upcomingMatches = data.matches
       .filter((match) => match.status !== "FINISHED")
       .slice(0, 1);
 
-    
     if (recentResults.length > 0) {
       matchContainer.innerHTML += `<p class="match-section-title">📊 Recent Results</p>`;
       recentResults.forEach((match) => renderMatchCard(match));
@@ -217,7 +215,6 @@ async function fetchWorldCupMatches() {
       "<p>Error loading matches. Please check your API key.</p>";
   }
 }
-
 
 function renderMatchCard(match) {
   const homeTeam = match.homeTeam;

@@ -1,12 +1,12 @@
 {
-    "manifest_version": 3,
-    "name": "Personal Dashboard",
-    "version": "1.0.0",
-    "description": "Just for practicing async JS",
-    "action": {
-        "default_icon": "icon.png"
-    },
-    "chrome_url_overrides": {
-        "newtab": "index.html"
-    }
+  "manifest_version": 3,
+  "name": "Baseline",
+  "version": "1.0.0",
+  "description": "A new tab replacement that gives globally-aware people a 10-second briefing on the state of the world; markets, weather, air quality, and even today's biggest match — before everything else starts competing for their attention.",
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  }
 }
