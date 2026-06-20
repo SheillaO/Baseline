@@ -42,5 +42,29 @@ snapshot from six independent data sources:
 | 🌅 **Sun Times** | Today's sunrise and sunset for your location | Sunrise-Sunset.org |
 | 💰 **Crypto** | Live price, 24h high/low for two coins (toggle) | CoinGecko |
 | 😱 **
+Fear & Greed** | Market sentiment index (0-100) | Alternative.me |
+| 💱 **Exchange Rates** | USD vs EUR, GBP, KES | Open Exchange Rates |
+
+No account. No login. No data sent anywhere. 
+Everything is fetched fresh on every load.
+
+---
+
+## Architecture
+
+Three files. Six external APIs. Zero dependencies.
+baseline/
+
+├── index.html    — structure and layout
+
+├── index.css     — visual layer, text shadows, responsive layout
+
+└── index.js      — all data fetching, DOM updates, state
+
+The entire application is a single JavaScript file making 
+parallel fetch requests. There is no bundler, no framework, 
+no build step, and no npm. The only dependency is a browser.
+
+---
 
 
