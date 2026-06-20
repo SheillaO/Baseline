@@ -266,7 +266,45 @@ open source.
 
 ---
 
+| ⚽ **Live Scores** | World Cup 2026 fixtures, scores, and status | API-Sports |
 
+## Why Live Scores Belong in a "Briefing, Not a Distraction" Tool
+
+During a World Cup, the most common reason someone opens a new 
+tab isn't to write a to-do list, it's to check the score. 
+Without Baseline, that means opening Twitter, getting hit by 
+three unrelated trending topics, and resurfacing twenty minutes 
+later having read nothing about the actual match.
+
+Baseline answers the one question you actually had — score, 
+status, who's playing, in the same glance as the time and 
+weather, then gets out of the way. This is the same philosophy 
+applied to global events instead of personal productivity: 
+the information you were going to seek out anyway, delivered 
+without the detour through everything competing for your 
+attention along the way.
+
+## Known Limitations
+
+Being upfront about tradeoffs:
+
+- **The football API key is exposed client-side.** This is a 
+  vanilla JS app with no backend, so there's no way to call a 
+  paid third-party API without the key being visible in the 
+  browser's Network tab. For a personal dashboard run locally, 
+  this is an acceptable tradeoff. For a public deployment, the 
+  correct fix is a small serverless function (Cloudflare Worker 
+  or Vercel Edge Function) that holds the key server-side and 
+  proxies the request — listed on the roadmap below.
+- **No request caching.** Every page load re-fetches all nine 
+  data sources. For a personal new-tab page opened dozens of 
+  times a day, this adds up in API quota. A `localStorage` 
+  cache with a short TTL (5–10 minutes) would fix this without 
+  adding any real complexity.
+- **Free-tier rate limits.** The football fixtures endpoint in 
+  particular has a low daily request ceiling on free plans — 
+  worth checking against API-Sports' dashboard if fixtures stop 
+  loading unexpectedly.
 
 ## Run Locally
 
