@@ -190,12 +190,12 @@ async function fetchWorldCupMatches() {
 
     const recentResults = data.matches
       .filter((match) => match.status === "FINISHED")
-      .slice(-3);
+      .slice(-2);
 
     
     const upcomingMatches = data.matches
       .filter((match) => match.status !== "FINISHED")
-      .slice(0, 2);
+      .slice(0, 1);
 
     
     if (recentResults.length > 0) {
