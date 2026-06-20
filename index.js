@@ -27,9 +27,7 @@ async function fetchCoin(coinId) {
             <span>${data.name}</span>
         `;
 
-    // FIXED: writes to its own div with "=" instead of appending to the
-    // parent #crypto with "+=" — the old version stacked duplicate price
-    // paragraphs every time you toggled coins.
+   
     document.getElementById("crypto-prices").innerHTML = `
             <p>🎯: $${data.market_data.current_price.usd.toLocaleString()}</p>
             <p>👆: $${data.market_data.high_24h.usd.toLocaleString()}</p>
@@ -45,10 +43,6 @@ function toggleCoin() {
   fetchCoin(coins[currentCoinIndex]);
 }
 
-// FIXED: button now lives as static HTML (see index.html below) and gets
-// wired up here with addEventListener. Inline onclick="" attributes don't
-// work with <script type="module"> — module-scoped functions aren't
-// attached to window the way they are in a normal script.
 document.getElementById("coin-toggle").addEventListener("click", toggleCoin);
 
 fetchCoin(coins[currentCoinIndex]);
@@ -63,11 +57,7 @@ function getCurrentTime() {
 
 setInterval(getCurrentTime, 1000);
 
-// FIXED: weather, air quality, and sunrise/sunset all now share ONE
-// geolocation callback and ONE lat/lon pair. Previously, air quality and
-// sunrise/sunset were separate top-level fetches referencing variables
-// that only existed inside this callback — that threw a ReferenceError
-// which silently stopped every statement after it in the whole file.
+
 navigator.geolocation.getCurrentPosition(async (position) => {
   const lat = position.coords.latitude;
   const lon = position.coords.longitude;
@@ -91,7 +81,7 @@ navigator.geolocation.getCurrentPosition(async (position) => {
     console.error(err);
   }
 
-  // Air quality (moved inside, now uses local lat/lon)
+  
   try {
     const res = await fetch(
       `https://apis.scrimba.com/openweathermap/data/2.5/air_pollution?lat=${lat}&lon=${lon}`,
@@ -111,7 +101,7 @@ navigator.geolocation.getCurrentPosition(async (position) => {
     console.error(err);
   }
 
-  // Sunrise/sunset (moved inside, now uses local lat/lon)
+ 
   try {
     const res = await fetch(
       `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&formatted=0`,
@@ -185,12 +175,8 @@ fetch("https://open.er-api.com/v6/latest/USD")
       `<p class="fx-title">💱 FX unavailable</p>`;
   });
 
-// ⚠️ SECURITY NOTE: this key is visible to anyone who views page source or
-// opens DevTools → Network tab. That's a known limitation of calling a
-// paid third-party API directly from client-side JS with no backend.
-// Rotate this key in your API-Sports dashboard before pushing this
-// publicly — the one below is now exposed and should be treated as burned.
-const API_KEY = "c9b28b867e47748d45e03099bd52cb82"; // ⚠️ rotate this
+
+const API_KEY = "f5a63d13b866aec6785fd3e621b05936"; 
 
 const BASE_URL = "https://v3.football.api-sports.io";
 const matchContainer = document.getElementById("football-matches");
