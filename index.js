@@ -131,3 +131,23 @@ fetch("https://api.quotable.io/random?tags=inspirational|technology|success")
     })
     .catch((err) => console.error(err));
 
+    fetch("https://open.er-api.com/v6/latest/USD")
+      .then((res) => res.json())
+      .then((data) => {
+        // Pick 3 currencies that matter to a global audience
+        const currencies = ["EUR", "GBP", "KES"];
+
+        let ratesHTML = `<p class="fx-title">💱 USD</p>`;
+
+        currencies.forEach((currency) => {
+          const rate = data.rates[currency];
+          ratesHTML += `<p class="fx-row">${currency}: ${rate.toFixed(2)}</p>`;
+        });
+
+        document.getElementById("fx-rates").innerHTML = ratesHTML;
+      })
+      .catch((err) => {
+        document.getElementById("fx-rates").innerHTML =
+          `<p class="fx-title">💱 FX unavailable</p>`;
+      });
+
