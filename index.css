@@ -244,12 +244,13 @@ p#author {
 }
 
 footer {
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%); /* Centers footer at the exact bottom center */
+    position: fixed;
+    bottom: 6px;
+    left: 0;
+    right: 0;
+    text-align: center;
     font-size: 0.75rem;
-    opacity: 0.6;
+    opacity: 0.75;
 }
 
 footer a {
