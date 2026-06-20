@@ -26,7 +26,7 @@ div.top {
 
 h1.time {
     text-align: center;
-    font-size: 3rem;
+    font-size: 1.5rem;
 }
 
 div#crypto {
@@ -173,7 +173,7 @@ p#author {
 #football-matches {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 4px;
     margin: 20px auto;
     max-width: 400px;
     font-family: "Poppins", sans-serif;
