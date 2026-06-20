@@ -175,7 +175,6 @@ const matchContainer = document.getElementById("football-matches");
 
 async function fetchWorldCupMatches() {
   try {
-   
     const response = await fetch("/.netlify/functions/football");
 
     if (!response.ok) {
@@ -183,19 +182,17 @@ async function fetchWorldCupMatches() {
     }
 
     const data = await response.json();
-
-   
     console.log("Football API response:", data);
 
-    const fixtures = data.matches;
+    // FIX 3: Removed the duplicated declaration statement for fixtures
     const fixtures = data.matches
-      .filter((match) => match.status !== "FINISHED")
-      .slice(0, 5);
+      ? data.matches.filter((match) => match.status !== "FINISHED").slice(0, 5)
+      : [];
 
     matchContainer.innerHTML = "";
 
     if (!fixtures || fixtures.length === 0) {
-      matchContainer.innerHTML = "<p>No matches found for this tournament.</p>";
+      matchContainer.innerHTML = "<p>No upcoming matches found.</p>";
       return;
     }
 
