@@ -188,17 +188,16 @@ async function fetchWorldCupMatches() {
       return;
     }
 
-    // Last 3 finished matches — these are the most recent RESULTS
     const recentResults = data.matches
       .filter((match) => match.status === "FINISHED")
       .slice(-3);
 
-    // Next 2 matches that haven't been played yet
+    
     const upcomingMatches = data.matches
       .filter((match) => match.status !== "FINISHED")
       .slice(0, 2);
 
-    // NEW: only show a header if that section actually has matches in it
+    
     if (recentResults.length > 0) {
       matchContainer.innerHTML += `<p class="match-section-title">📊 Recent Results</p>`;
       recentResults.forEach((match) => renderMatchCard(match));
@@ -219,7 +218,7 @@ async function fetchWorldCupMatches() {
   }
 }
 
-// NEW: the card template lives here once, called twice (one per section)
+
 function renderMatchCard(match) {
   const homeTeam = match.homeTeam;
   const awayTeam = match.awayTeam;
