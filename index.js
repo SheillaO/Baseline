@@ -27,7 +27,6 @@ async function fetchCoin(coinId) {
             <span>${data.name}</span>
         `;
 
-   
     document.getElementById("crypto-prices").innerHTML = `
             <p>🎯: $${data.market_data.current_price.usd.toLocaleString()}</p>
             <p>👆: $${data.market_data.high_24h.usd.toLocaleString()}</p>
@@ -57,7 +56,6 @@ function getCurrentTime() {
 
 setInterval(getCurrentTime, 1000);
 
-
 navigator.geolocation.getCurrentPosition(async (position) => {
   const lat = position.coords.latitude;
   const lon = position.coords.longitude;
@@ -81,7 +79,6 @@ navigator.geolocation.getCurrentPosition(async (position) => {
     console.error(err);
   }
 
-  
   try {
     const res = await fetch(
       `https://apis.scrimba.com/openweathermap/data/2.5/air_pollution?lat=${lat}&lon=${lon}`,
@@ -101,7 +98,6 @@ navigator.geolocation.getCurrentPosition(async (position) => {
     console.error(err);
   }
 
- 
   try {
     const res = await fetch(
       `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&formatted=0`,
@@ -175,45 +171,42 @@ fetch("https://open.er-api.com/v6/latest/USD")
       `<p class="fx-title">💱 FX unavailable</p>`;
   });
 
-  const FOOTBALL_API_KEY = "983e09a9a3d9446d94aaaf15a2485354"; // get this from football-data.org
+const matchContainer = document.getElementById("football-matches");
 
-  const matchContainer = document.getElementById("football-matches");
+async function fetchWorldCupMatches() {
+  try {
+    // NEW: calls YOUR function, not football-data.org directly.
+    // No API key, no headers needed here anymore — the function holds that.
+    const response = await fetch("/.netlify/functions/football");
 
-  async function fetchWorldCupMatches() {
-    try {
-      const response = await fetch(
-        "https://api.football-data.org/v4/competitions/WC/matches",
-        {
-          headers: {
-            "X-Auth-Token": FOOTBALL_API_KEY,
-          },
-        },
-      );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+    const data = await response.json();
 
-      const data = await response.json();
-      const fixtures = data.matches; 
+    // TEMPORARY: keep this console.log for your first test, then remove it.
+    // We haven't confirmed the exact field names yet — this lets us check.
+    console.log("Football API response:", data);
 
-      matchContainer.innerHTML = "";
+    const fixtures = data.matches;
 
-      if (!fixtures || fixtures.length === 0) {
-        matchContainer.innerHTML =
-          "<p>No matches found for this tournament.</p>";
-        return;
-      }
+    matchContainer.innerHTML = "";
 
-      fixtures.forEach((match) => {
-        const homeTeam = match.homeTeam;
-        const awayTeam = match.awayTeam;
-        const status = match.status;
+    if (!fixtures || fixtures.length === 0) {
+      matchContainer.innerHTML = "<p>No matches found for this tournament.</p>";
+      return;
+    }
 
-        const homeScore = match.score?.fullTime?.home ?? "-";
-        const awayScore = match.score?.fullTime?.away ?? "-";
+    fixtures.forEach((match) => {
+      const homeTeam = match.homeTeam;
+      const awayTeam = match.awayTeam;
+      const status = match.status;
 
-        matchContainer.innerHTML += `
+      const homeScore = match.score?.fullTime?.home ?? "-";
+      const awayScore = match.score?.fullTime?.away ?? "-";
+
+      matchContainer.innerHTML += `
                 <div class="match-card">
                     <div class="team">
                         <img src="${homeTeam.crest}" alt="${homeTeam.name}" width="30" />
@@ -229,17 +222,12 @@ fetch("https://open.er-api.com/v6/latest/USD")
                     </div>
                 </div>
             `;
-      });
-    } catch (error) {
-      console.error("Failed to fetch matches:", error);
-      matchContainer.innerHTML =
-        "<p>Error loading matches. Please check your API key.</p>";
-    }
+    });
+  } catch (error) {
+    console.error("Failed to fetch matches:", error);
+    matchContainer.innerHTML =
+      "<p>Error loading matches. Please check your API key.</p>";
   }
+}
 
-  fetchWorldCupMatches();
-
-
-
-  
-
+fetchWorldCupMatches();
