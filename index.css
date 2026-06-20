@@ -13,7 +13,7 @@ body {
 
 main {
     padding: 15px;
-     min-height: 100vh;
+    height: 100vh; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -243,15 +243,13 @@ p#author {
     margin-top: 0;
 }
 
-
 footer {
-    position: fixed;
-    bottom: 6px;
-    left: 0;
-    right: 0;
-    text-align: center;
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%); /* Centers footer at the exact bottom center */
     font-size: 0.75rem;
-    opacity: 0.75;
+    opacity: 0.6;
 }
 
 footer a {
