@@ -135,7 +135,7 @@ fetch("https://api.quotable.io/random?tags=inspirational|technology|success")
       .then((res) => res.json())
       .then((data) => {
         // Pick 3 currencies that matter to a global audience
-        const currencies = ["EUR", "GBP", "KES"];
+        const currencies = ["EUR", "GBP", "USD", "KES"];
 
         let ratesHTML = `<p class="fx-title">💱 USD</p>`;
 

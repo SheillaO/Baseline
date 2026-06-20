@@ -143,3 +143,20 @@ p#author {
     border-radius: 4px;
     transition: width 0.6s ease;
 }
+
+#fx-rates {
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.fx-title {
+    margin: 0 0 4px 0;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.fx-row {
+    margin: 2px 0;
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
