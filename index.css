@@ -229,3 +229,16 @@ p#author {
     margin-top: 4px;
     text-transform: uppercase;
 }
+
+.match-section-title {
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 14px 0 6px 0;
+    opacity: 0.85;
+}
+
+.match-section-title:first-child {
+    margin-top: 0;
+}

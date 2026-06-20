@@ -176,56 +176,73 @@ const matchContainer = document.getElementById("football-matches");
 async function fetchWorldCupMatches() {
   try {
     const response = await fetch("/.netlify/functions/football");
-
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
     const data = await response.json();
-    console.log("Football API response:", data);
-
-    // FIX 3: Removed the duplicated declaration statement for fixtures
-    const fixtures = data.matches
-      ? data.matches.filter((match) => match.status !== "FINISHED").slice(0, 5)
-      : [];
 
     matchContainer.innerHTML = "";
 
-    if (!fixtures || fixtures.length === 0) {
+    if (!data.matches) {
       matchContainer.innerHTML = "<p>No upcoming matches found.</p>";
       return;
     }
 
-    fixtures.forEach((match) => {
-      const homeTeam = match.homeTeam;
-      const awayTeam = match.awayTeam;
-      const status = match.status;
+    // Last 3 finished matches — these are the most recent RESULTS
+    const recentResults = data.matches
+      .filter((match) => match.status === "FINISHED")
+      .slice(-3);
 
-      const homeScore = match.score?.fullTime?.home ?? "-";
-      const awayScore = match.score?.fullTime?.away ?? "-";
+    // Next 2 matches that haven't been played yet
+    const upcomingMatches = data.matches
+      .filter((match) => match.status !== "FINISHED")
+      .slice(0, 2);
 
-      matchContainer.innerHTML += `
-                <div class="match-card">
-                    <div class="team">
-                        <img src="${homeTeam.crest}" alt="${homeTeam.name}" width="30" />
-                        <span>${homeTeam.name}</span>
-                    </div>
-                    <div class="score-status">
-                        <span class="score">${homeScore} - ${awayScore}</span>
-                        <span class="status-badge">${status}</span>
-                    </div>
-                    <div class="team">
-                        <img src="${awayTeam.crest}" alt="${awayTeam.name}" width="30" />
-                        <span>${awayTeam.name}</span>
-                    </div>
-                </div>
-            `;
-    });
+    // NEW: only show a header if that section actually has matches in it
+    if (recentResults.length > 0) {
+      matchContainer.innerHTML += `<p class="match-section-title">📊 Recent Results</p>`;
+      recentResults.forEach((match) => renderMatchCard(match));
+    }
+
+    if (upcomingMatches.length > 0) {
+      matchContainer.innerHTML += `<p class="match-section-title">🔜 Upcoming</p>`;
+      upcomingMatches.forEach((match) => renderMatchCard(match));
+    }
+
+    if (recentResults.length === 0 && upcomingMatches.length === 0) {
+      matchContainer.innerHTML = "<p>No matches found.</p>";
+    }
   } catch (error) {
     console.error("Failed to fetch matches:", error);
     matchContainer.innerHTML =
       "<p>Error loading matches. Please check your API key.</p>";
   }
+}
+
+// NEW: the card template lives here once, called twice (one per section)
+function renderMatchCard(match) {
+  const homeTeam = match.homeTeam;
+  const awayTeam = match.awayTeam;
+  const status = match.status;
+  const homeScore = match.score?.fullTime?.home ?? "-";
+  const awayScore = match.score?.fullTime?.away ?? "-";
+
+  matchContainer.innerHTML += `
+            <div class="match-card">
+                <div class="team">
+                    <img src="${homeTeam.crest}" alt="${homeTeam.name}" width="30" />
+                    <span>${homeTeam.name}</span>
+                </div>
+                <div class="score-status">
+                    <span class="score">${homeScore} - ${awayScore}</span>
+                    <span class="status-badge">${status}</span>
+                </div>
+                <div class="team">
+                    <img src="${awayTeam.crest}" alt="${awayTeam.name}" width="30" />
+                    <span>${awayTeam.name}</span>
+                </div>
+            </div>
+        `;
 }
 
 fetchWorldCupMatches();
