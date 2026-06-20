@@ -9,7 +9,6 @@ body {
     color: white;
     font-family: "Poppins", sans-serif;
     text-shadow: 0px 0px 20px #242424;
-    overflow: hidden;
 }
 
 main {
@@ -18,7 +17,6 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    position: relative;
 }
 
 div.top {
@@ -28,11 +26,11 @@ div.top {
 
 h1.time {
     text-align: center;
-    font-size: 5rem;
+    font-size: 3rem;
 }
 
 div#crypto {
-    font-size: 1rem;
+    font-size: 0.5rem;
 }
 
 div#crypto > p,
@@ -172,11 +170,10 @@ p#author {
     text-shadow: 0px 0px 20px #242424;
 }
 
-/* Container layout */
 #football-matches {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     margin: 20px auto;
     max-width: 400px;
     font-family: "Poppins", sans-serif;
