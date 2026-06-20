@@ -121,3 +121,25 @@ p#author {
 #coin-toggle:hover {
     background: rgba(255,255,255,0.25);
 }
+
+.fear-greed-label {
+    margin: 6px 0 4px 0;
+    font-size: 0.85rem;
+}
+
+.fear-greed-bar-wrap {
+    margin: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    height: 5px;
+    width: 120px;
+    overflow: hidden;
+}
+
+.fear-greed-bar {
+    display: block;
+    height: 100%;
+    background: white;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+}
