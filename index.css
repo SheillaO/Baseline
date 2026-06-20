@@ -1,6 +1,3 @@
-/* ==========================================================================
-   1. GLOBAL & BASE STYLES
-   ========================================================================== */
 * {
     box-sizing: border-box;
 }    
@@ -16,22 +13,22 @@ body {
 
 main {
     padding: 15px;
-    min-height: 100vh; /* Changed from 100vh to prevent content from cutting off */
+     min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-bottom: 45px; /* Creates a safe zone so content never hits the footer */
 }
 
-/* ==========================================================================
-   2. TOP ROW LAYOUT (Crypto, FX, Weather)
-   ========================================================================== */
 div.top {
     display: flex;
     justify-content: space-between;
 }
 
-/* Crypto Widget */
+h1.time {
+    text-align: center;
+    font-size: 5rem;
+}
+
 div#crypto {
     font-size: 1.3rem;
 }
@@ -51,64 +48,6 @@ div#crypto-top > span {
     margin-left: 10px;
 }
 
-#coin-toggle {
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: white;
-    padding: 3px 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.75rem;
-    margin-top: 6px;
-    display: block;
-}
-
-#coin-toggle:hover {
-    background: rgba(255,255,255,0.25);
-}
-
-/* Fear & Greed Index */
-.fear-greed-label {
-    margin: 6px 0 4px 0;
-    font-size: 0.85rem;
-}
-
-.fear-greed-bar-wrap {
-    margin: 0;
-    background: rgba(255,255,255,0.2);
-    border-radius: 4px;
-    height: 5px;
-    width: 120px;
-    overflow: hidden;
-}
-
-.fear-greed-bar {
-    display: block;
-    height: 100%;
-    background: white;
-    border-radius: 4px;
-    transition: width 0.6s ease;
-}
-
-/* Foreign Exchange Rates Widget */
-#fx-rates {
-    font-size: 0.9rem;
-    text-align: center;
-}
-
-.fx-title {
-    margin: 0 0 4px 0;
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-.fx-row {
-    margin: 2px 0;
-    font-size: 0.85rem;
-    opacity: 0.9;
-}
-
-/* Weather & AQI Widget */
 div#weather {
     display: flex;
     align-items: center;
@@ -136,6 +75,30 @@ p.weather-temp {
     margin-left: -10px;
 }
 
+p#author {
+    font-size: 1rem;
+}
+
+#quote {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.quote-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin: 0 0 4px 0;
+    text-shadow: 0px 0px 20px #242424;
+}
+
+.quote-author {
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.8;
+    text-shadow: 0px 0px 20px #242424;
+}
+
 #aqi {
     text-align: right;
     margin: 0;
@@ -144,15 +107,75 @@ p.weather-temp {
     text-shadow: 0px 0px 20px #242424;
 }
 
-/* ==========================================================================
-   3. MIDDLE LAYOUT (Football Widget)
-   ========================================================================== */
+#coin-toggle {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    margin-top: 6px;
+    display: block;
+}
+
+#coin-toggle:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+.fear-greed-label {
+    margin: 6px 0 4px 0;
+    font-size: 0.85rem;
+}
+
+.fear-greed-bar-wrap {
+    margin: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    height: 5px;
+    width: 120px;
+    overflow: hidden;
+}
+
+.fear-greed-bar {
+    display: block;
+    height: 100%;
+    background: white;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+}
+
+#fx-rates {
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.fx-title {
+    margin: 0 0 4px 0;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.fx-row {
+    margin: 2px 0;
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+#sun-times {
+    text-align: center;
+    font-size: 0.9rem;
+    margin: 0;
+    opacity: 0.85;
+    text-shadow: 0px 0px 20px #242424;
+}
+
+/* Container layout */
 #football-matches {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin: 20px auto;
-    width: 100%;
     max-width: 400px;
     font-family: sans-serif;
 }
@@ -169,6 +192,7 @@ p.weather-temp {
     color: white;
 }
 
+
 .team {
     display: flex;
     align-items: center;
@@ -183,6 +207,7 @@ p.weather-temp {
 .team img {
     object-fit: contain;
 }
+
 
 .score-status {
     display: flex;
@@ -218,49 +243,7 @@ p.weather-temp {
     margin-top: 0;
 }
 
-/* ==========================================================================
-   4. BOTTOM LAYOUT (Clock, Sun Times, Quotes, Author)
-   ========================================================================== */
-h1.time {
-    text-align: center;
-    font-size: 5rem;
-}
 
-#sun-times {
-    text-align: center;
-    font-size: 0.9rem;
-    margin: 0;
-    opacity: 0.85;
-    text-shadow: 0px 0px 20px #242424;
-}
-
-#quote {
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.quote-text {
-    font-size: 1.1rem;
-    font-style: italic;
-    margin: 0 0 4px 0;
-    text-shadow: 0px 0px 20px #242424;
-}
-
-.quote-author {
-    font-size: 0.85rem;
-    margin: 0;
-    opacity: 0.8;
-    text-shadow: 0px 0px 20px #242424;
-}
-
-p.author, #author {
-    font-size: 1rem;
-}
-
-/* ==========================================================================
-   5. FIXED FOOTER LINK PANEL
-   ========================================================================== */
 footer {
     position: fixed;
     bottom: 6px;
