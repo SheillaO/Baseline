@@ -57,3 +57,18 @@ navigator.geolocation.getCurrentPosition(async position => {
         console.error(err)
     }
 });
+
+fetch("https://api.quotable.io/random?tags=inspirational|technology|success")
+  .then((res) => res.json())
+  .then((data) => {
+    document.getElementById("quote").innerHTML = `
+            <p class="quote-text">"${data.content}"</p>
+            <p class="quote-author">— ${data.author}</p>
+        `;
+  })
+  .catch((err) => {
+    document.getElementById("quote").innerHTML = `
+            <p class="quote-text">"The best time to start was yesterday. The next best time is now."</p>
+        `;
+  });
+
