@@ -160,3 +160,11 @@ p#author {
     font-size: 0.85rem;
     opacity: 0.9;
 }
+
+#sun-times {
+    text-align: center;
+    font-size: 0.9rem;
+    margin: 0;
+    opacity: 0.85;
+    text-shadow: 0px 0px 20px #242424;
+}

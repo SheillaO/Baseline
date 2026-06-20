@@ -74,6 +74,22 @@ navigator.geolocation.getCurrentPosition(async position => {
     }
 });
 
+ fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&formatted=0`)
+        .then(res => res.json())
+        .then(data => {
+            const sunrise = new Date(data.results.sunrise)
+            const sunset = new Date(data.results.sunset)
+
+            const fmt = { hour: "2-digit", minute: "2-digit" }
+            const sunriseStr = sunrise.toLocaleTimeString("en-us", fmt)
+            const sunsetStr = sunset.toLocaleTimeString("en-us", fmt)
+
+            document.getElementById("sun-times").textContent =
+                `🌅 ${sunriseStr}  ·  🌇 ${sunsetStr}`
+        })
+        .catch(err => console.error(err))
+
+
 fetch(`https://apis.scrimba.com/openweathermap/data/2.5/air_pollution?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
         .then(res => res.json())
         .then(data => {
