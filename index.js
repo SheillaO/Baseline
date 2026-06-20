@@ -58,6 +58,23 @@ navigator.geolocation.getCurrentPosition(async position => {
     }
 });
 
+fetch(`https://apis.scrimba.com/openweathermap/data/2.5/air_pollution?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
+        .then(res => res.json())
+        .then(data => {
+            const aqiLabels = {
+                1: { label: "Good", emoji: "😊" },
+                2: { label: "Fair", emoji: "🙂" },
+                3: { label: "Moderate", emoji: "😐" },
+                4: { label: "Poor", emoji: "😷" },
+                5: { label: "Very Poor", emoji: "🤢" }
+            }
+            const aqi = data.list[0].main.aqi
+            const aqiInfo = aqiLabels[aqi]
+            document.getElementById("aqi").textContent = `${aqiInfo.emoji} Air: ${aqiInfo.label}`
+        })
+        .catch(err => console.error(err))
+
+
 fetch("https://api.quotable.io/random?tags=inspirational|technology|success")
   .then((res) => res.json())
   .then((data) => {

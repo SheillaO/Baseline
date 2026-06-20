@@ -77,3 +77,23 @@ p.weather-temp {
 p#author {
     font-size: 1rem;
 }
+
+#quote {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.quote-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin: 0 0 4px 0;
+    text-shadow: 0px 0px 20px #242424;
+}
+
+.quote-author {
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.8;
+    text-shadow: 0px 0px 20px #242424;
+}
