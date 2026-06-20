@@ -4,6 +4,15 @@
 a 10-second briefing on the state of the world; before 
 everything else starts competing for their attention.**
 
+
+
+<p align="center">
+  <br />
+  <strong>🔗 Try it out live: <a href="https://netlify.app" target="_blank" rel="noopener noreferrer">👉 Click Here to Open Live Demo 👈</a></strong>
+</p>
+
+---
+
 ---
 ## Why Baseline Exists
 
