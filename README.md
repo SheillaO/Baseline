@@ -27,5 +27,20 @@ answer them. Until this one.
 
 ---
 
+## What It Shows
+
+Every time you open a new tab, Baseline assembles a live 
+snapshot from six independent data sources:
+
+| Layer | Data | Source |
+|-------|------|--------|
+| 🖼️ **Background** | Random landscape photograph | Unsplash |
+| ⏰ **Time** | Live local time, updates every second | `Date` API |
+| 💬 **Quote** | Rotating inspirational or technology quote | Quotable.io |
+| 🌤️ **Weather** | Current conditions + city name | OpenWeatherMap |
+| 🌬️ **Air Quality** | AQI index with 5-level classification | OpenWeatherMap |
+| 🌅 **Sun Times** | Today's sunrise and sunset for your location | Sunrise-Sunset.org |
+| 💰 **Crypto** | Live price, 24h high/low for two coins (toggle) | CoinGecko |
+| 😱 **
 
 
