@@ -175,8 +175,7 @@ const matchContainer = document.getElementById("football-matches");
 
 async function fetchWorldCupMatches() {
   try {
-    // NEW: calls YOUR function, not football-data.org directly.
-    // No API key, no headers needed here anymore — the function holds that.
+   
     const response = await fetch("/.netlify/functions/football");
 
     if (!response.ok) {
@@ -185,6 +184,8 @@ async function fetchWorldCupMatches() {
 
     const data = await response.json();
 
+   
+    console.log("Football API response:", data);
 
     const fixtures = data.matches;
     const fixtures = data.matches
