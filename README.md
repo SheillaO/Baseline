@@ -19,8 +19,6 @@ everything else starts competing for their attention.**
 
 
 ---
-
----
 ## Why Baseline Exists
 
 Momentum has 3 million users and charges $2.99/month. Its core 
