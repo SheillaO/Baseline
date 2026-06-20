@@ -33,7 +33,8 @@ div#crypto {
     font-size: 1.3rem;
 }
 
-div#crypto > p {
+div#crypto > p,
+#crypto-prices p {
     margin: 0;
 }
 
