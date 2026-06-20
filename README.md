@@ -5,10 +5,13 @@ a 10-second briefing on the state of the world; before
 everything else starts competing for their attention.**
 
 
-
 <p align="center">
   <br />
-  <strong>🔗 Try it out live: <a href="https://netlify.app" target="_blank" rel="noopener noreferrer">👉 Click Here to Open Live Demo 👈</a></strong>
+  <strong>🔗 Try it out live:</strong>
+  <br /><br />
+  <a href="https://baselineboard.netlify.app/" target="_blank" rel="noopener noreferrer">
+    <img src="https://shields.io🚀%20LIVE%20DEMO-👉%20CLICK%20HERE%20TO%20OPEN%20👈-007acc?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Demo" height="45" />
+  </a>
 </p>
 
 ---
