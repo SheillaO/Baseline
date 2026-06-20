@@ -185,11 +185,11 @@ async function fetchWorldCupMatches() {
 
     const data = await response.json();
 
-    // TEMPORARY: keep this console.log for your first test, then remove it.
-    // We haven't confirmed the exact field names yet — this lets us check.
-    console.log("Football API response:", data);
 
     const fixtures = data.matches;
+    const fixtures = data.matches
+      .filter((match) => match.status !== "FINISHED")
+      .slice(0, 5);
 
     matchContainer.innerHTML = "";
 
