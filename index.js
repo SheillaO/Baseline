@@ -1,15 +1,15 @@
 try {
-    const res = await fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature")
-    const data = await res.json()
-    document.body.style.backgroundImage = `url(${data.urls.regular})`
-    document.getElementById("author").textContent = `By: ${data.user.name}`
+  const res = await fetch(
+    "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=nature",
+  );
+  const data = await res.json();
+  document.body.style.backgroundImage = `url(${data.urls.regular})`;
+  document.getElementById("author").textContent = `By: ${data.user.name}`;
 } catch (err) {
-    document.body.style.backgroundImage = `url(https://images.unsplash.com/photo-1560008511-11c63416e52d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyMTEwMjl8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MjI4NDIxMTc&ixlib=rb-1.2.1&q=80&w=1080
-)`
-    document.getElementById("author").textContent = `By: Dodi Achmad`
+  document.body.style.backgroundImage = `url(https://images.unsplash.com/photo-1560008511-11c63416e52d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyMTEwMjl8MHwxfHJhbmRvbXx8fHx8fHx8fDE2MjI4NDIxMTc&ixlib=rb-1.2.1&q=80&w=1080
+)`;
+  document.getElementById("author").textContent = `By: Dodi Achmad`;
 }
-
-
 
 const coins = ["dogecoin", "bitcoin"];
 let currentCoinIndex = 0;
@@ -48,64 +48,69 @@ function toggleCoin() {
 // Initial fetch on page load
 fetchCoin(coins[currentCoinIndex]);
 
-
 function getCurrentTime() {
-    const date = new Date()
-    document.getElementById("time").textContent = date.toLocaleTimeString("en-us", { timeStyle: "short" })
+  const date = new Date();
+  document.getElementById("time").textContent = date.toLocaleTimeString(
+    "en-us",
+    { timeStyle: "short" },
+  );
 }
 
-setInterval(getCurrentTime, 1000)
+setInterval(getCurrentTime, 1000);
 
-navigator.geolocation.getCurrentPosition(async position => {
-    try {
-        const res = await fetch(`https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial`)
-        if (!res.ok) {
-            throw Error("Weather data not available")
-        }
-        const data = await res.json()
-        const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
-        document.getElementById("weather").innerHTML = `
+navigator.geolocation.getCurrentPosition(async (position) => {
+  try {
+    const res = await fetch(
+      `https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial`,
+    );
+    if (!res.ok) {
+      throw Error("Weather data not available");
+    }
+    const data = await res.json();
+    const iconUrl = `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+    document.getElementById("weather").innerHTML = `
             <img src=${iconUrl} />
             <p class="weather-temp">${Math.round(data.main.temp)}º</p>
             <p class="weather-city">${data.name}</p>
-        `
-    } catch (err) {
-        console.error(err)
-    }
+        `;
+  } catch (err) {
+    console.error(err);
+  }
 });
 
- fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&formatted=0`)
-        .then(res => res.json())
-        .then(data => {
-            const sunrise = new Date(data.results.sunrise)
-            const sunset = new Date(data.results.sunset)
+fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&formatted=0`)
+  .then((res) => res.json())
+  .then((data) => {
+    const sunrise = new Date(data.results.sunrise);
+    const sunset = new Date(data.results.sunset);
 
-            const fmt = { hour: "2-digit", minute: "2-digit" }
-            const sunriseStr = sunrise.toLocaleTimeString("en-us", fmt)
-            const sunsetStr = sunset.toLocaleTimeString("en-us", fmt)
+    const fmt = { hour: "2-digit", minute: "2-digit" };
+    const sunriseStr = sunrise.toLocaleTimeString("en-us", fmt);
+    const sunsetStr = sunset.toLocaleTimeString("en-us", fmt);
 
-            document.getElementById("sun-times").textContent =
-                `🌅 ${sunriseStr}  ·  🌇 ${sunsetStr}`
-        })
-        .catch(err => console.error(err))
+    document.getElementById("sun-times").textContent =
+      `🌅 ${sunriseStr}  ·  🌇 ${sunsetStr}`;
+  })
+  .catch((err) => console.error(err));
 
-
-fetch(`https://apis.scrimba.com/openweathermap/data/2.5/air_pollution?lat=${position.coords.latitude}&lon=${position.coords.longitude}`)
-        .then(res => res.json())
-        .then(data => {
-            const aqiLabels = {
-                1: { label: "Good", emoji: "😊" },
-                2: { label: "Fair", emoji: "🙂" },
-                3: { label: "Moderate", emoji: "😐" },
-                4: { label: "Poor", emoji: "😷" },
-                5: { label: "Very Poor", emoji: "🤢" }
-            }
-            const aqi = data.list[0].main.aqi
-            const aqiInfo = aqiLabels[aqi]
-            document.getElementById("aqi").textContent = `${aqiInfo.emoji} Air: ${aqiInfo.label}`
-        })
-        .catch(err => console.error(err))
-
+fetch(
+  `https://apis.scrimba.com/openweathermap/data/2.5/air_pollution?lat=${position.coords.latitude}&lon=${position.coords.longitude}`,
+)
+  .then((res) => res.json())
+  .then((data) => {
+    const aqiLabels = {
+      1: { label: "Good", emoji: "😊" },
+      2: { label: "Fair", emoji: "🙂" },
+      3: { label: "Moderate", emoji: "😐" },
+      4: { label: "Poor", emoji: "😷" },
+      5: { label: "Very Poor", emoji: "🤢" },
+    };
+    const aqi = data.list[0].main.aqi;
+    const aqiInfo = aqiLabels[aqi];
+    document.getElementById("aqi").textContent =
+      `${aqiInfo.emoji} Air: ${aqiInfo.label}`;
+  })
+  .catch((err) => console.error(err));
 
 fetch("https://api.quotable.io/random?tags=inspirational|technology|success")
   .then((res) => res.json())
@@ -121,49 +126,117 @@ fetch("https://api.quotable.io/random?tags=inspirational|technology|success")
         `;
   });
 
-  fetch("https://api.alternative.me/fng/")
-    .then((res) => res.json())
-    .then((data) => {
-      const value = data.data[0].value;
-      const label = data.data[0].value_classification;
+fetch("https://api.alternative.me/fng/")
+  .then((res) => res.json())
+  .then((data) => {
+    const value = data.data[0].value;
+    const label = data.data[0].value_classification;
 
-      // Pick an emoji based on the sentiment category
-      const sentimentEmoji = {
-        "Extreme Fear": "😱",
-        Fear: "😨",
-        Neutral: "😐",
-        Greed: "😏",
-        "Extreme Greed": "🤑",
-      };
+    // Pick an emoji based on the sentiment category
+    const sentimentEmoji = {
+      "Extreme Fear": "😱",
+      Fear: "😨",
+      Neutral: "😐",
+      Greed: "😏",
+      "Extreme Greed": "🤑",
+    };
 
-      const emoji = sentimentEmoji[label] || "📊";
+    const emoji = sentimentEmoji[label] || "📊";
 
-      document.getElementById("fear-greed").innerHTML = `
+    document.getElementById("fear-greed").innerHTML = `
             <p class="fear-greed-label">${emoji} ${label}</p>
             <p class="fear-greed-bar-wrap">
                 <span class="fear-greed-bar" style="width: ${value}%"></span>
             </p>
         `;
-    })
-    .catch((err) => console.error(err));
+  })
+  .catch((err) => console.error(err));
 
-    fetch("https://open.er-api.com/v6/latest/USD")
-      .then((res) => res.json())
-      .then((data) => {
-        // Pick 3 currencies that matter to a global audience
-        const currencies = ["EUR", "GBP", "USD", "KES"];
+fetch("https://open.er-api.com/v6/latest/USD")
+  .then((res) => res.json())
+  .then((data) => {
+    // Pick 3 currencies that matter to a global audience
+    const currencies = ["EUR", "GBP", "USD", "KES"];
 
-        let ratesHTML = `<p class="fx-title">💱 USD</p>`;
+    let ratesHTML = `<p class="fx-title">💱 USD</p>`;
 
-        currencies.forEach((currency) => {
-          const rate = data.rates[currency];
-          ratesHTML += `<p class="fx-row">${currency}: ${rate.toFixed(2)}</p>`;
-        });
+    currencies.forEach((currency) => {
+      const rate = data.rates[currency];
+      ratesHTML += `<p class="fx-row">${currency}: ${rate.toFixed(2)}</p>`;
+    });
 
-        document.getElementById("fx-rates").innerHTML = ratesHTML;
-      })
-      .catch((err) => {
-        document.getElementById("fx-rates").innerHTML =
-          `<p class="fx-title">💱 FX unavailable</p>`;
-      });
+    document.getElementById("fx-rates").innerHTML = ratesHTML;
+  })
+  .catch((err) => {
+    document.getElementById("fx-rates").innerHTML =
+      `<p class="fx-title">💱 FX unavailable</p>`;
+  });
 
+const API_KEY = "YOUR_API_KEY_HERE";
+const BASE_URL = "https://v3.football.api-sports.io/";
+const matchContainer = document.getElementById("football-matches");
+
+async function fetchWorldCupMatches() {
+  try {
+    const response = await fetch(`${BASE_URL}/fixtures?league=1&season=2026`, {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-rapidapi-key": API_KEY,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    const fixtures = data.response;
+
+    // Clear previous entries if any
+    matchContainer.innerHTML = "";
+
+    if (fixtures.length === 0) {
+      matchContainer.innerHTML = "<p>No matches found for this tournament.</p>";
+      return;
+    }
+
+    // Loop through each match and render it into the DOM
+    fixtures.forEach((match) => {
+      const homeTeam = match.teams.home;
+      const awayTeam = match.teams.away;
+      const goals = match.goals;
+      const status = match.fixture.status.short; // e.g., 'FT' (Full Time), 'LIVE', 'NS' (Not Started)
+
+      // Format score output based on whether the game has started
+      const homeScore = goals.home !== null ? goals.home : "-";
+      const awayScore = goals.away !== null ? goals.away : "-";
+
+      matchContainer.innerHTML += `
+                <div class="match-card">
+                    <div class="team">
+                        <img src="${homeTeam.logo}" alt="${homeTeam.name}" width="30" />
+                        <span>${homeTeam.name}</span>
+                    </div>
+                    
+                    <div class="score-status">
+                        <span class="score">${homeScore} - ${awayScore}</span>
+                        <span class="status-badge">${status}</span>
+                    </div>
+                    
+                    <div class="team">
+                        <img src="${awayTeam.logo}" alt="${awayTeam.name}" width="30" />
+                        <span>${awayTeam.name}</span>
+                    </div>
+                </div>
+            `;
+    });
+  } catch (error) {
+    console.error("Failed to fetch matches:", error);
+    matchContainer.innerHTML =
+      "<p>Error loading matches. Please check your API key.</p>";
+  }
+}
+
+// Call the function to trigger the fetch on load
+fetchWorldCupMatches();
