@@ -14,7 +14,6 @@ try {
 const coins = ["dogecoin", "bitcoin"];
 let currentCoinIndex = 0;
 
-// Combined using your original DOM elements and async/await
 async function fetchCoin(coinId) {
   try {
     const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}`);
@@ -23,13 +22,15 @@ async function fetchCoin(coinId) {
     }
     const data = await res.json();
 
-    // Keeps your exact original original div targeting
     document.getElementById("crypto-top").innerHTML = `
             <img src=${data.image.small} />
             <span>${data.name}</span>
         `;
-    // Restored your exact append style, but with beautiful .toLocaleString() pricing
-    document.getElementById("crypto").innerHTML += `
+
+    // FIXED: writes to its own div with "=" instead of appending to the
+    // parent #crypto with "+=" — the old version stacked duplicate price
+    // paragraphs every time you toggled coins.
+    document.getElementById("crypto-prices").innerHTML = `
             <p>🎯: $${data.market_data.current_price.usd.toLocaleString()}</p>
             <p>👆: $${data.market_data.high_24h.usd.toLocaleString()}</p>
             <p>👇: $${data.market_data.low_24h.usd.toLocaleString()}</p>
@@ -39,13 +40,17 @@ async function fetchCoin(coinId) {
   }
 }
 
-// Toggle function stays intact
 function toggleCoin() {
   currentCoinIndex = currentCoinIndex === 0 ? 1 : 0;
   fetchCoin(coins[currentCoinIndex]);
 }
 
-// Initial fetch on page load
+// FIXED: button now lives as static HTML (see index.html below) and gets
+// wired up here with addEventListener. Inline onclick="" attributes don't
+// work with <script type="module"> — module-scoped functions aren't
+// attached to window the way they are in a normal script.
+document.getElementById("coin-toggle").addEventListener("click", toggleCoin);
+
 fetchCoin(coins[currentCoinIndex]);
 
 function getCurrentTime() {
@@ -58,10 +63,19 @@ function getCurrentTime() {
 
 setInterval(getCurrentTime, 1000);
 
+// FIXED: weather, air quality, and sunrise/sunset all now share ONE
+// geolocation callback and ONE lat/lon pair. Previously, air quality and
+// sunrise/sunset were separate top-level fetches referencing variables
+// that only existed inside this callback — that threw a ReferenceError
+// which silently stopped every statement after it in the whole file.
 navigator.geolocation.getCurrentPosition(async (position) => {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+
+  // Weather
   try {
     const res = await fetch(
-      `https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=imperial`,
+      `https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial`,
     );
     if (!res.ok) {
       throw Error("Weather data not available");
@@ -76,28 +90,13 @@ navigator.geolocation.getCurrentPosition(async (position) => {
   } catch (err) {
     console.error(err);
   }
-});
 
-fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&formatted=0`)
-  .then((res) => res.json())
-  .then((data) => {
-    const sunrise = new Date(data.results.sunrise);
-    const sunset = new Date(data.results.sunset);
-
-    const fmt = { hour: "2-digit", minute: "2-digit" };
-    const sunriseStr = sunrise.toLocaleTimeString("en-us", fmt);
-    const sunsetStr = sunset.toLocaleTimeString("en-us", fmt);
-
-    document.getElementById("sun-times").textContent =
-      `🌅 ${sunriseStr}  ·  🌇 ${sunsetStr}`;
-  })
-  .catch((err) => console.error(err));
-
-fetch(
-  `https://apis.scrimba.com/openweathermap/data/2.5/air_pollution?lat=${position.coords.latitude}&lon=${position.coords.longitude}`,
-)
-  .then((res) => res.json())
-  .then((data) => {
+  // Air quality (moved inside, now uses local lat/lon)
+  try {
+    const res = await fetch(
+      `https://apis.scrimba.com/openweathermap/data/2.5/air_pollution?lat=${lat}&lon=${lon}`,
+    );
+    const data = await res.json();
     const aqiLabels = {
       1: { label: "Good", emoji: "😊" },
       2: { label: "Fair", emoji: "🙂" },
@@ -105,12 +104,28 @@ fetch(
       4: { label: "Poor", emoji: "😷" },
       5: { label: "Very Poor", emoji: "🤢" },
     };
-    const aqi = data.list[0].main.aqi;
-    const aqiInfo = aqiLabels[aqi];
+    const aqiInfo = aqiLabels[data.list[0].main.aqi];
     document.getElementById("aqi").textContent =
       `${aqiInfo.emoji} Air: ${aqiInfo.label}`;
-  })
-  .catch((err) => console.error(err));
+  } catch (err) {
+    console.error(err);
+  }
+
+  // Sunrise/sunset (moved inside, now uses local lat/lon)
+  try {
+    const res = await fetch(
+      `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&formatted=0`,
+    );
+    const data = await res.json();
+    const sunrise = new Date(data.results.sunrise);
+    const sunset = new Date(data.results.sunset);
+    const fmt = { hour: "2-digit", minute: "2-digit" };
+    document.getElementById("sun-times").textContent =
+      `🌅 ${sunrise.toLocaleTimeString("en-us", fmt)}  ·  🌇 ${sunset.toLocaleTimeString("en-us", fmt)}`;
+  } catch (err) {
+    console.error(err);
+  }
+});
 
 fetch("https://api.quotable.io/random?tags=inspirational|technology|success")
   .then((res) => res.json())
@@ -132,7 +147,6 @@ fetch("https://api.alternative.me/fng/")
     const value = data.data[0].value;
     const label = data.data[0].value_classification;
 
-    // Pick an emoji based on the sentiment category
     const sentimentEmoji = {
       "Extreme Fear": "😱",
       Fear: "😨",
@@ -155,8 +169,7 @@ fetch("https://api.alternative.me/fng/")
 fetch("https://open.er-api.com/v6/latest/USD")
   .then((res) => res.json())
   .then((data) => {
-    // Pick 3 currencies that matter to a global audience
-    const currencies = ["EUR", "GBP", "USD", "KES"];
+    const currencies = ["EUR", "GBP", "KES"];
 
     let ratesHTML = `<p class="fx-title">💱 USD</p>`;
 
@@ -172,8 +185,14 @@ fetch("https://open.er-api.com/v6/latest/USD")
       `<p class="fx-title">💱 FX unavailable</p>`;
   });
 
-const API_KEY = "YOUR_API_KEY_HERE";
-const BASE_URL = "https://v3.football.api-sports.io/";
+// ⚠️ SECURITY NOTE: this key is visible to anyone who views page source or
+// opens DevTools → Network tab. That's a known limitation of calling a
+// paid third-party API directly from client-side JS with no backend.
+// Rotate this key in your API-Sports dashboard before pushing this
+// publicly — the one below is now exposed and should be treated as burned.
+const API_KEY = "c9b28b867e47748d45e03099bd52cb82"; // ⚠️ rotate this
+
+const BASE_URL = "https://v3.football.api-sports.io";
 const matchContainer = document.getElementById("football-matches");
 
 async function fetchWorldCupMatches() {
@@ -181,8 +200,11 @@ async function fetchWorldCupMatches() {
     const response = await fetch(`${BASE_URL}/fixtures?league=1&season=2026`, {
       method: "GET",
       headers: {
-        "x-rapidapi-host": "v3.football.api-sports.io",
-        "x-rapidapi-key": API_KEY,
+        // FIXED: calling v3.football.api-sports.io DIRECTLY needs a single
+        // "x-apisports-key" header. "x-rapidapi-host"/"x-rapidapi-key" only
+        // work when your fetch URL points at a rapidapi.com gateway domain
+        // instead — mixing the two causes a 401/403 even with a valid key.
+        "x-apisports-key": API_KEY,
       },
     });
 
@@ -193,7 +215,6 @@ async function fetchWorldCupMatches() {
     const data = await response.json();
     const fixtures = data.response;
 
-    // Clear previous entries if any
     matchContainer.innerHTML = "";
 
     if (fixtures.length === 0) {
@@ -201,14 +222,12 @@ async function fetchWorldCupMatches() {
       return;
     }
 
-    // Loop through each match and render it into the DOM
     fixtures.forEach((match) => {
       const homeTeam = match.teams.home;
       const awayTeam = match.teams.away;
       const goals = match.goals;
-      const status = match.fixture.status.short; // e.g., 'FT' (Full Time), 'LIVE', 'NS' (Not Started)
+      const status = match.fixture.status.short;
 
-      // Format score output based on whether the game has started
       const homeScore = goals.home !== null ? goals.home : "-";
       const awayScore = goals.away !== null ? goals.away : "-";
 
@@ -218,12 +237,10 @@ async function fetchWorldCupMatches() {
                         <img src="${homeTeam.logo}" alt="${homeTeam.name}" width="30" />
                         <span>${homeTeam.name}</span>
                     </div>
-                    
                     <div class="score-status">
                         <span class="score">${homeScore} - ${awayScore}</span>
                         <span class="status-badge">${status}</span>
                     </div>
-                    
                     <div class="team">
                         <img src="${awayTeam.logo}" alt="${awayTeam.name}" width="30" />
                         <span>${awayTeam.name}</span>
@@ -238,5 +255,4 @@ async function fetchWorldCupMatches() {
   }
 }
 
-// Call the function to trigger the fetch on load
 fetchWorldCupMatches();
