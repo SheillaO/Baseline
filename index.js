@@ -176,6 +176,9 @@ fetch("https://open.er-api.com/v6/latest/USD")
   });
 
 
+
+  
+
 const API_KEY = "f5a63d13b866aec6785fd3e621b05936"; 
 
 const BASE_URL = "https://v3.football.api-sports.io";
@@ -183,13 +186,15 @@ const matchContainer = document.getElementById("football-matches");
 
 async function fetchWorldCupMatches() {
   try {
-    const response = await fetch(`${BASE_URL}/fixtures?league=1&season=2026`, {
-      method: "GET",
-      headers: {
-        
-        "x-apisports-key": API_KEY,
+    const response = await fetch(
+      `https://v3.football.api-sports.io/leagues?id=1&season=2026`,
+      {
+        method: "GET",
+        headers: {
+          "x-apisports-key": API_KEY,
+        },
       },
-    });
+    );
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
