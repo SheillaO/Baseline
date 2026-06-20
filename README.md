@@ -162,5 +162,140 @@ navigator.geolocation.getCurrentPosition(position => {
     fetch(`...sunrise-sunset...?lat=${lat}&lng=${lon}`) // request 3
 })
 ```
+One permission prompt. One coordinate resolution. 
+Three data sources. This matters on mobile especially — 
+repeated geolocation calls drain battery and increase 
+latency noticeably.
+
+---
+
+## The Fear & Greed Meter
+
+The most visually distinctive element — a progress bar 
+that fills based on market sentiment — is built entirely 
+from a CSS `width` set inline from API data:
+
+```javascript
+// The bar width IS the fear/greed value (0-100)
+`<span class="fear-greed-bar" style="width: ${value}%"></span>`
+```
+
+No canvas. No SVG. No chart library. A single CSS transition 
+handles the animation:
+
+```css
+.fear-greed-bar {
+    transition: width 0.6s ease;
+}
+```
+
+This is a pattern worth knowing: **data-driven CSS** using 
+inline style injection is often the right level of complexity 
+for a single dynamic value. Reaching for a charting library 
+here would be engineering for its own sake.
+
+---
+
+## What This Project Demonstrates
+
+**Parallel async programming without async/await**
+Six concurrent API calls using Promise chains — understanding 
+`.then()` and `.catch()` as composable units rather than 
+syntactic sugar for `await`.
+
+**Fault-tolerant UI**
+Independent failure domains mean no single API outage 
+can break the user experience. Each widget owns its 
+own error state.
+
+**Data-driven rendering without a framework**
+All DOM updates are targeted and surgical — 
+`getElementById` + `innerHTML` or `textContent`. No 
+virtual DOM, no re-render cycle, no component tree.
+
+**Geolocation as a data bus**
+Using a single position callback to feed three dependent 
+API calls eliminates redundant permission requests and 
+coordinates three data sources on a single async event.
+
+**State minimalism**
+One mutable variable for the coin toggle. Everything 
+else is derived from API responses at render time.
+Zero stale state.
+
+---
+
+## Built With
+
+- **HTML5** — semantic structure, no divitis
+- **CSS3** — `text-shadow` depth layering, flexbox layout, 
+              inline data-driven bar chart
+- **Vanilla JavaScript** — Fetch API, Promise chains, 
+                            `setInterval`, Geolocation API, 
+                            `Date` API
+- **Zero dependencies** — no npm, no bundler, no framework
+
+**Six external APIs (all free, no key required except 
+Unsplash via Scrimba proxy):**
+- [Unsplash](https://unsplash.com/developers) — photography
+- [Quotable.io](https://quotable.io) — quotes
+- [OpenWeatherMap](https://openweathermap.org/api) — weather + AQI
+- [Sunrise-Sunset.org](https://sunrise-sunset.org/api) — sun times
+- [CoinGecko](https://coingecko.com/api) — crypto prices
+- [Alternative.me](https://alternative.me/crypto/fear-and-greed-index/) — fear & greed
+- [Open Exchange Rates](https://open.er-api.com) — forex
+
+---
+
+## Roadmap
+
+| Feature | Complexity | Why |
+|---------|------------|-----|
+| **Local inflation rate** | Low — World Bank API, free | Ties directly to the financial awareness thesis |
+| **Keyboard shortcut panel** | Low — `keydown` listener | Power-user layer, no UI clutter |
+| **Offline fallback** | Medium — `localStorage` cache with timestamps | Show last-known data when network is unavailable |
+| **User-configurable currencies** | Medium — `localStorage` for preferences | KES matters more to a Nairobi user than JPY |
+| **Chrome extension packaging** | Low — `manifest.json` | Makes it an actual new tab replacement |
+
+The Chrome extension roadmap item is the one worth 
+building next. Packaging this as a `manifest.json` 
+extension with `"chrome_url_overrides": { "newtab": "index.html" }` 
+turns it into a product that directly competes with 
+Momentum — same distribution channel, zero cost, 
+open source.
+
+---
+
+
+
+## Run Locally
+
+No install required.
+
+```bash
+git clone https://github.com/SheillaO/baseline
+cd baseline
+open index.html
+```
+
+Or via Live Server (VS Code) if you want geolocation 
+to work without the browser blocking it on `file://`.
+
+---
+
+**Sheilla O.**
+Product-Minded Developer | Nairobi, Kenya 🇰🇪
+
+Building the financial awareness layer that productivity 
+tools forgot to include.
+
+💼 [LinkedIn](https://www.linkedin.com/in/sheillaolga/) • 
+🐙 [GitHub](https://github.com/SheillaO)
+
+---
+
+*Momentum tells you what you want to accomplish today. 
+Baseline tells you what the world looks like right now. 
+Both matter. Only one existed.*
 
 
