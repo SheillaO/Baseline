@@ -13,10 +13,6 @@ everything else starts competing for their attention.**
   <strong>🔗 Try it out live:</strong>
   <br /><br />
   <a href="https://baselineboard.netlify.app/" target="_blank" rel="noopener noreferrer">
-    <img src="https://shields.io" alt="Live Demo" height="45" />
-  </a>
-  <br /><br />
-  <a href="https://baselineboard.netlify.app/" target="_blank" rel="noopener noreferrer">
     <strong>🚀 👉 Open Baseline Live Dashboard 👈 🌅</strong>
   </a>
 </p>
