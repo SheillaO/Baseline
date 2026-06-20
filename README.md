@@ -4,6 +4,9 @@
 a 10-second briefing on the state of the world; before 
 everything else starts competing for their attention.**
 
+<img width="1596" height="807" alt="Baseline" src="https://github.com/user-attachments/assets/f4d2c212-6a23-4ffe-b06c-3d6850feae99" />
+
+
 
 <p align="center">
   <br />
